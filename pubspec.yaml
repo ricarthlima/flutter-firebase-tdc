@@ -1,4 +1,4 @@
-name: flutter_firebase_tdc
+name: flutter_cant_print
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -36,6 +36,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core:
   cloud_firestore:
+  firebase_storage:
+  flutter_windowmanager: ^0.2.0
+  file_picker: ^4.2.3
+  uuid:
+  firebase_auth:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

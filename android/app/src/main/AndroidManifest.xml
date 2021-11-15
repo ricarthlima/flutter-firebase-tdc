@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_firebase_tdc">
+    package="com.example.flutter_cant_print">
    <application
-        android:label="flutter_firebase_tdc"
+        android:label="flutter_cant_print"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

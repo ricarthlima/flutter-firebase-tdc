@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 class UploadScreen extends StatelessWidget {
   FirebaseStorage storage = FirebaseStorage.instance;
-  Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +16,10 @@ class UploadScreen extends StatelessWidget {
       drawer: Drawer(
         child: Column(
           children: [
+            UserAccountsDrawerHeader(
+              accountName: CircleAvatar(),
+              accountEmail: const Text(""),
+            ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text("Sair"),

@@ -7,7 +7,9 @@ import 'upload_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: "login",
       routes: {
         "login": (context) => LoginScreen(),

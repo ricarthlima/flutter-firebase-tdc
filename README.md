@@ -1,16 +1,11 @@
-# flutter_cant_print
+# Can't Print
 
-A new Flutter project.
+Projeto para palestra "Flutter + Firebase" da Alura no TDC2021.
 
-## Getting Started
+## To-Do List
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Readme seguir padrão da Alura
+- Possibilidade de enviar uma imagem diretamente para alguem no Upload
+- Consulta e Registro no Firestore para verificar se a imagem ainda está disponível para esse usuário
+- Push Notification ao Receber uma imagem
+- Comentar o código nas partes que interassam à Palestra

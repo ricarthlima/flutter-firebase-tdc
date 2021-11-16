@@ -22,12 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Can't Print",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "login",
       routes: {
-        "login": (context) => LoginScreen(),
+        "login": (context) => const LoginScreen(),
         "upload": (context) => UploadScreen(),
       },
     );

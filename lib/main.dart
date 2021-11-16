@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "login",
       routes: {
         "login": (context) => const LoginScreen(),
-        "upload": (context) => UploadScreen(),
+        "upload": (context) => const UploadScreen(),
       },
     );
   }

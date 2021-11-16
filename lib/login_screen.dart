@@ -20,6 +20,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    auth.authStateChanges().listen((User? user) {
+      if (user != null) {
+        Navigator.pushReplacementNamed(context, "upload");
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     auth.userChanges().listen((User? user) {
       if (user != null) {

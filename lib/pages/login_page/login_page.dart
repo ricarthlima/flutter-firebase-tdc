@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginPageState extends State<LoginPage> {
   // Recebe uma instância do Firebase Authenticator
   FirebaseAuth auth = FirebaseAuth.instance;
 

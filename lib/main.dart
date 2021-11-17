@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cant_print/login_screen.dart';
+import 'package:flutter_cant_print/pages/login_page/login_page.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
-import 'upload_screen.dart';
+import 'pages/image_page/image_page.dart';
+import 'pages/upload_page/upload_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +28,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "login",
       routes: {
-        "login": (context) => const LoginScreen(),
-        "upload": (context) => const UploadScreen(),
+        "login": (context) => const LoginPage(),
+        "upload": (context) => const UploadPage(),
+        "image": (context) => const ImagePage(),
       },
     );
   }

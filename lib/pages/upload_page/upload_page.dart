@@ -4,17 +4,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cant_print/list_shared_images.dart';
+import 'package:flutter_cant_print/pages/upload_page/widgets/list_images_widget.dart';
 import 'package:uuid/uuid.dart';
 
-class UploadScreen extends StatefulWidget {
-  const UploadScreen({Key? key}) : super(key: key);
+class UploadPage extends StatefulWidget {
+  const UploadPage({Key? key}) : super(key: key);
 
   @override
-  State<UploadScreen> createState() => _UploadScreenState();
+  State<UploadPage> createState() => _UploadPageState();
 }
 
-class _UploadScreenState extends State<UploadScreen> {
+class _UploadPageState extends State<UploadPage> {
   FirebaseStorage storage = FirebaseStorage.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -46,7 +46,7 @@ class _UploadScreenState extends State<UploadScreen> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-              accountName: CircleAvatar(),
+              accountName: const CircleAvatar(),
               accountEmail: Text(
                 (user != null) ? user!.email! : "",
                 style: const TextStyle(color: Colors.white),
@@ -68,7 +68,7 @@ class _UploadScreenState extends State<UploadScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      body: (user != null) ? ListSharedImages(user) : Container(),
+      body: (user != null) ? ListImagesWidget(user) : Container(),
     );
   }
 

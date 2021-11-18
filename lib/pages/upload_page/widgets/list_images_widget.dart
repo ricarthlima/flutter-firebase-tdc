@@ -21,24 +21,57 @@ class _ListImagesWidgetState extends State<ListImagesWidget> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   List<ImageFirestoreModel> listImageFirestore = [];
+  List<ImageFirestoreModel> listSharedImageFirestore = [];
+
+  bool isShowingShared = false;
 
   @override
   void initState() {
-    setupListener();
+    setupListeners();
     super.initState();
   }
 
-  setupListener() {
-    firestore.collection(widget.user!.uid).snapshots().listen((snapshot) {
+  setupListeners() {
+    // Listener para Imagens Proprias
+    firestore.collection(widget.user!.email!).snapshots().listen((snapshot) {
       listImageFirestore = [];
 
       for (DocumentSnapshot doc in snapshot.docs) {
-        storage.ref("uploads/" + doc.id).getDownloadURL().then((urlDownload) {
+        if (doc.id != "data" && doc.id != "shared") {
+          storage.ref("uploads/" + doc.id).getDownloadURL().then((urlDownload) {
+            setState(() {
+              listImageFirestore.add(
+                ImageFirestoreModel(
+                  id: doc.id,
+                  createdAt: doc.get("created_at"),
+                  urlInStorage: urlDownload,
+                ),
+              );
+            });
+          });
+        }
+      }
+    });
+
+    // Listener para Imagens Compartilhadas
+    firestore
+        .collection(widget.user!.email!)
+        .doc("shared")
+        .collection("shared")
+        .snapshots()
+        .listen((snapshot) {
+      listSharedImageFirestore = [];
+
+      for (DocumentSnapshot doc in snapshot.docs) {
+        storage
+            .ref("uploads/" + doc.get("imageId"))
+            .getDownloadURL()
+            .then((urlDownload) {
           setState(() {
-            listImageFirestore.add(
+            listSharedImageFirestore.add(
               ImageFirestoreModel(
                 id: doc.id,
-                createdAt: doc.get("created_at"),
+                createdAt: doc.get("ownerEmail"),
                 urlInStorage: urlDownload,
               ),
             );
@@ -51,13 +84,32 @@ class _ListImagesWidgetState extends State<ListImagesWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Center(
-        child: Wrap(
-          children: [
-            for (ImageFirestoreModel imageFirestore in listImageFirestore)
-              ImageWidget(imageFirestore: imageFirestore)
-          ],
-        ),
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                isShowingShared = !isShowingShared;
+              });
+            },
+            child: Text(
+              (!isShowingShared)
+                  ? "Mostrar compartilhadas comigo"
+                  : "Mostrar minhas imagens",
+            ),
+          ),
+          const SizedBox(height: 16),
+          Center(
+            child: Wrap(
+              children: [
+                for (ImageFirestoreModel imageFirestore in (!isShowingShared)
+                    ? listImageFirestore
+                    : listSharedImageFirestore)
+                  ImageWidget(imageFirestore: imageFirestore)
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -13,7 +13,7 @@ class ImageWidget extends StatelessWidget {
         Navigator.pushNamed(context, "image", arguments: imageFirestore.id);
       },
       child: Container(
-        margin: const EdgeInsets.all(4),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         width: 96,
         child: Stack(
           children: [

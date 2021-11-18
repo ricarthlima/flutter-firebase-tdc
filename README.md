@@ -12,11 +12,6 @@
 
 ### Técnico
 
-- **Página de Upload:**
-  - Upload modal:
-    - Verificação da Imagem;
-    - Lista de e-mails para compartilhar;
-    - Tempo de expiração;
 - **Página de Visualização:**
   - Verificar se aquele usuário pode acessar aquela imagem;
 - **Push Notification ao receber uma imagem**
@@ -28,5 +23,9 @@
 - **Página de Upload:**
   - Upload simples
   - Listagem de imagens
+  - Upload modal:
+    - Verificação da Imagem;
+    - Lista de e-mails para compartilhar;
+    - Tempo de expiração;
 - **Tela de visualização de imagem**
   - Visualização das imagens com base no ID

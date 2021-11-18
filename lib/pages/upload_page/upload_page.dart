@@ -1,11 +1,11 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cant_print/pages/upload_page/widgets/list_images_widget.dart';
-import 'package:uuid/uuid.dart';
+import 'package:flutter_cant_print/pages/upload_page/widgets/upload_form_widget.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);
@@ -19,7 +19,6 @@ class _UploadPageState extends State<UploadPage> {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Uuid uuid = const Uuid();
   User? user;
 
   @override
@@ -64,38 +63,36 @@ class _UploadPageState extends State<UploadPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          upload();
+          openModalToUpload();
         },
         child: const Icon(Icons.add),
       ),
-      body: (user != null) ? ListImagesWidget(user) : Container(),
+      body: (user != null)
+          ? ListImagesWidget(user)
+          : const CircularProgressIndicator(),
     );
   }
 
-  void upload() async {
+  void openModalToUpload() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       dialogTitle: "Escolha uma imagem",
       type: FileType.image,
     );
 
     if (result != null) {
-      // Gerar ID da imagem
-      String imageId = uuid.v1();
-
-      // Escolher arquivo
-      File file = File(result.files.single.path!);
-
-      // Enviar o arquivo para o Firebase Storage
-      await storage.ref('uploads/' + imageId).putFile(file);
-
-      // Associa a imagem ao usuário usando CloudFirestore
-      firestore.collection(user!.uid.toString()).doc(imageId).set(
-        {
-          "created_at": DateTime.now().toString(),
+      showMaterialModalBottomSheet(
+        context: context,
+        expand: false,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        builder: (BuildContext _context) {
+          return UploadFormWidget(
+            result,
+            user: user!,
+          );
         },
       );
-    } else {
-      // User canceled the picker
     }
   }
 }

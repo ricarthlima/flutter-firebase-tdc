@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 
@@ -173,10 +174,22 @@ class _LoginPageState extends State<LoginPage> {
 
   registerUser() async {
     // Cria um usuário usando o email e a senha
-    await auth.createUserWithEmailAndPassword(
+    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
       email: _controllerLogin.text,
       password: _controllerSenha.text,
     );
+
+    // Registra ID e Email no Firestore
+    await FirebaseFirestore.instance
+        .collection(_controllerLogin.text)
+        .doc("data")
+        .set(
+      {
+        'uid': userCredential.user!.uid,
+        "email": _controllerLogin.text,
+      },
+    );
+
     toUploadScreen(context);
   }
 

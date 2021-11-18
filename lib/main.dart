@@ -7,11 +7,15 @@ import 'pages/image_page/image_page.dart';
 import 'pages/upload_page/upload_page.dart';
 
 void main() async {
+  // Necessário quando usa-se uma "main()" assíncrona
   WidgetsFlutterBinding.ensureInitialized();
 
+  //Linha responsável por proibir printscreens
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
+  // Inicializa o app Firebase (usando as informações no google-services.json)
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

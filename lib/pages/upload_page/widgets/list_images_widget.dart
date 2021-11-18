@@ -9,7 +9,9 @@ import 'image_widget.dart';
 // ignore: must_be_immutable
 class ListImagesWidget extends StatefulWidget {
   User? user;
-  ListImagesWidget(this.user, {Key? key}) : super(key: key);
+  bool isShowingShared;
+  ListImagesWidget(this.user, this.isShowingShared, {Key? key})
+      : super(key: key);
 
   @override
   State<ListImagesWidget> createState() => _ListImagesWidgetState();
@@ -23,7 +25,7 @@ class _ListImagesWidgetState extends State<ListImagesWidget> {
   List<ImageFirestoreModel> listImageFirestore = [];
   List<ImageFirestoreModel> listSharedImageFirestore = [];
 
-  bool isShowingShared = false;
+  //bool isShowingShared = false;
 
   @override
   void initState() {
@@ -84,32 +86,15 @@ class _ListImagesWidgetState extends State<ListImagesWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                isShowingShared = !isShowingShared;
-              });
-            },
-            child: Text(
-              (!isShowingShared)
-                  ? "Mostrar compartilhadas comigo"
-                  : "Mostrar minhas imagens",
-            ),
-          ),
-          const SizedBox(height: 16),
-          Center(
-            child: Wrap(
-              children: [
-                for (ImageFirestoreModel imageFirestore in (!isShowingShared)
-                    ? listImageFirestore
-                    : listSharedImageFirestore)
-                  ImageWidget(imageFirestore: imageFirestore)
-              ],
-            ),
-          ),
-        ],
+      child: Center(
+        child: Wrap(
+          children: [
+            for (ImageFirestoreModel imageFirestore in (!widget.isShowingShared)
+                ? listImageFirestore
+                : listSharedImageFirestore)
+              ImageWidget(imageFirestore: imageFirestore)
+          ],
+        ),
       ),
     );
   }

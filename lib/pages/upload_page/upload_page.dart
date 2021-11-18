@@ -21,8 +21,12 @@ class _UploadPageState extends State<UploadPage> {
 
   User? user;
 
+  bool isShowingShared = false;
+
   @override
   void initState() {
+    // Verifica se há desconexão do usuário
+
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         Navigator.pushReplacementNamed(context, "login");
@@ -39,7 +43,9 @@ class _UploadPageState extends State<UploadPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Can't Print"),
+        title: Text(
+          (isShowingShared) ? "Imagens compartilhadas" : "Minhas imagens",
+        ),
       ),
       drawer: Drawer(
         child: Column(
@@ -61,14 +67,31 @@ class _UploadPageState extends State<UploadPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          openModalToUpload();
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                isShowingShared = !isShowingShared;
+              });
+            },
+            mini: true,
+            child: Icon(
+              (!isShowingShared) ? Icons.folder_shared : Icons.folder,
+            ),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              openModalToUpload();
+            },
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: (user != null)
-          ? ListImagesWidget(user)
+          ? ListImagesWidget(user, isShowingShared)
           : const CircularProgressIndicator(),
     );
   }

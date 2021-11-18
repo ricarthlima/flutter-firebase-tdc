@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -13,15 +12,15 @@ class _LoginPageState extends State<LoginPage> {
   // Recebe uma instância do Firebase Authenticator
   FirebaseAuth auth = FirebaseAuth.instance;
 
+  // Formulário
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerLogin = TextEditingController();
   final TextEditingController _controllerSenha = TextEditingController();
-
   bool wrongPass = false;
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    // Verifica se o usuário está logado
     auth.authStateChanges().listen((User? user) {
       if (user != null) {
         Navigator.pushReplacementNamed(context, "upload");
@@ -32,12 +31,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    auth.userChanges().listen((User? user) {
-      if (user != null) {
-        toUploadScreen(context);
-      }
-    });
-
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(48.0),
@@ -133,41 +126,42 @@ class _LoginPageState extends State<LoginPage> {
 
       toUploadScreen(context);
     } on FirebaseAuthException catch (exception) {
-      // Caso o usuário não seja encontrado
-      if (exception.code == 'user-not-found') {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Deseja registrar o seguinte e-mail?"),
-                content: Text(_controllerLogin.text),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      "Cancelar",
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      registerUser();
-                    },
-                    child: const Text("REGISTRAR"),
-                  ),
-                ],
-              );
-            });
-      }
-
       // Caso a senha esteja incorreta, informa.
       if (exception.code == "wrong-password") {
         wrongPass = true;
         _formKey.currentState!.validate();
+      }
+
+      // Caso o usuário não seja encontrado
+      if (exception.code == 'user-not-found') {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Deseja registrar o seguinte e-mail?"),
+              content: Text(_controllerLogin.text),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Cancelar",
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    registerUser();
+                  },
+                  child: const Text("REGISTRAR"),
+                ),
+              ],
+            );
+          },
+        );
       }
     }
   }

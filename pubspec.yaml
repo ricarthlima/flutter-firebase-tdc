@@ -35,15 +35,15 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # Firebase
-  firebase_core:
-  cloud_firestore:
-  firebase_storage:
-  firebase_auth:
+  firebase_core: ^1.10.0
+  firebase_auth: ^3.2.0
+  cloud_firestore: ^3.1.0
+  firebase_storage: ^10.1.0
 
   # Auxiliares
   flutter_windowmanager: ^0.2.0
   file_picker: ^4.2.3
-  uuid:
+  uuid: ^3.0.5
   modal_bottom_sheet: ^2.0.0
 
 dev_dependencies:

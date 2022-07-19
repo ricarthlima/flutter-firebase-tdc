@@ -134,34 +134,7 @@ class _LoginPageState extends State<LoginPage> {
 
       // Caso o usuário não seja encontrado
       if (exception.code == 'user-not-found') {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Deseja registrar o seguinte e-mail?"),
-              content: Text(_controllerLogin.text),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    "Cancelar",
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    registerUser();
-                  },
-                  child: const Text("REGISTRAR"),
-                ),
-              ],
-            );
-          },
-        );
+        showRegisterDialog(context);
       }
     }
   }
@@ -185,6 +158,37 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     toUploadScreen(context);
+  }
+
+  void showRegisterDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Deseja registrar o seguinte e-mail?"),
+          content: Text(_controllerLogin.text),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Cancelar",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                registerUser();
+              },
+              child: const Text("REGISTRAR"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   toUploadScreen(BuildContext context) async {

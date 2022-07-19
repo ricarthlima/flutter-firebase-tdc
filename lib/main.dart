@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cant_print/pages/login_page/login_page.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
+import 'firebase_options.dart';
 import 'pages/image_page/image_page.dart';
+import 'pages/login_page/login_page.dart';
 import 'pages/upload_page/upload_page.dart';
 
 void main() async {
@@ -14,7 +15,9 @@ void main() async {
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
   // Inicializa o app Firebase (usando as informações no google-services.json)
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }

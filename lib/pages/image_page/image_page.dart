@@ -28,11 +28,25 @@ class StfImagePage extends StatefulWidget {
 }
 
 class _StfImagePageState extends State<StfImagePage> {
-  FirebaseStorage storage = FirebaseStorage.instance;
   String? imageUrl;
 
   @override
   void initState() {
+    getImageFromStorage();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return (imageUrl == null)
+        ? const Center(child: CircularProgressIndicator())
+        : Center(child: Image.network(imageUrl!));
+  }
+
+  /// Pega uma imagem do Storage para ser mostrada na tela
+  void getImageFromStorage() {
+    FirebaseStorage storage = FirebaseStorage.instance;
+
     storage.ref("uploads/" + widget.imageId).getDownloadURL().then(
       (urlDownload) {
         setState(
@@ -42,14 +56,5 @@ class _StfImagePageState extends State<StfImagePage> {
         );
       },
     );
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return (imageUrl == null)
-        ? const Center(child: CircularProgressIndicator())
-        : Center(child: Image.network(imageUrl!));
   }
 }

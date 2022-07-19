@@ -85,7 +85,7 @@ class _UploadFormWidgetState extends State<UploadFormWidget> {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: ElevatedButton(
-                  onPressed: () => upload(),
+                  onPressed: () => upload(context),
                   child: const Text("Enviar"),
                 ),
               )
@@ -96,7 +96,7 @@ class _UploadFormWidgetState extends State<UploadFormWidget> {
     );
   }
 
-  void upload() async {
+  void upload(BuildContext context) async {
     FirebaseStorage storage = FirebaseStorage.instance;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 

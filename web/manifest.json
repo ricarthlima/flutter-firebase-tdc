@@ -1,11 +1,11 @@
 {
-    "name": "flutter_cant_print",
-    "short_name": "flutter_cant_print",
+    "name": "flutter_firebase_palestra",
+    "short_name": "flutter_firebase_palestra",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Empoderando o Flutter com Firebase",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

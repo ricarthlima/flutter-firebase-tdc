@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cant_print/models/image_firestore_model.dart';
+
+import '../../../models/image_firestore_model.dart';
 
 class ImageWidget extends StatelessWidget {
   final ImageFirestoreModel imageFirestore;

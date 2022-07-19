@@ -3,9 +3,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cant_print/pages/upload_page/widgets/list_images_widget.dart';
-import 'package:flutter_cant_print/pages/upload_page/widgets/upload_form_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import 'widgets/list_images_widget.dart';
+import 'widgets/upload_form_widget.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);
@@ -25,8 +26,12 @@ class _UploadPageState extends State<UploadPage> {
 
   @override
   void initState() {
-    // Verifica se há desconexão do usuário
+    checkUserState();
+    super.initState();
+  }
 
+  // Verifica se há desconexão do usuário
+  void checkUserState() {
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         Navigator.pushReplacementNamed(context, "login");
@@ -36,7 +41,6 @@ class _UploadPageState extends State<UploadPage> {
         });
       }
     });
-    super.initState();
   }
 
   @override
@@ -72,6 +76,7 @@ class _UploadPageState extends State<UploadPage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: "btn1",
             onPressed: () {
               setState(() {
                 isShowingShared = !isShowingShared;
@@ -83,6 +88,7 @@ class _UploadPageState extends State<UploadPage> {
             ),
           ),
           FloatingActionButton(
+            heroTag: "btn2",
             onPressed: () {
               openModalToUpload();
             },
